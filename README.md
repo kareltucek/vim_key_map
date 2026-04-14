@@ -8,6 +8,8 @@ Most `:map` listings are a flat, alphabetic dump. This one is organized the
 way you actually think about key bindings: "what's bound to `g`?", "is `<C-t>`
 free?".
 
+This was created using Claude Code.
+
 ## Features
 
 - Three-column output: **lhs | description | source**
