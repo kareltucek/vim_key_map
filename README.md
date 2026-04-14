@@ -10,19 +10,40 @@ free?".
 
 This was created using Claude Code.
 
-## Features
 
-- Three-column output: **lhs | description | source**
-- Bindings grouped by the base key they start from (case-folded), so `A`, `a`,
-  `<C-a>`, `<C-S-a>`, `aw`, `ap` all appear under `a:`.
-- Empty slots for `a`–`z` are shown, so you can spot which keys are free.
-- **Built-in Vim defaults are included** — parsed from your Neovim's shipped
-  `:help index.txt` at runtime, so they stay in sync with your version.
-- User mappings override defaults for the same lhs; no duplication.
-- Source column tells you **where each mapping came from**: the plugin file,
-  your config, or `vim-builtin`. Lua callbacks are resolved via
-  `debug.getinfo`.
-- Buffer-local mappings are marked `(buffer-local)`.
+## Features / Example
+
+Adds two commands: `:KeyMap <mode>` and `:KeyMapAll`, where `<mode>` is a mode character (`n`, `i`, `v`, `x`, `s`, `o`, `c`, or `t`).
+
+This lists all bindings as follows:
+
+```
+:KeyMap n
+Active key bindings for mode "n" (user mappings override defaults; empty slots are free):
+
+- a:
+    A          append text after the end of the line N times     vim-builtin
+    a          append-forward                                    init.lua
+    <C-A>      add N to number at/after cursor                   vim-builtin
+
+- b:
+    B          cursor N WORDS backward                           vim-builtin
+    b          cursor N words backward                           vim-builtin
+    <C-B>      scroll N screens Backwards                        vim-builtin
+
+- c:
+    <C-C>      interrupt current (search) command                vim-builtin
+
+...
+
+- g:
+    G          cursor to line N, default last line               vim-builtin
+    g%         → <Plug>(MatchitNormalBackward)                   plugin/matchit.vim
+    gT         go to the previous tab page                       vim-builtin
+    gf         → tih0<Esc>                                       init.lua
+    gg         cursor to line N, default first line              vim-builtin
+    gt         go to the next tab page                           vim-builtin
+```
 
 ## Installation
 
@@ -65,34 +86,6 @@ ln -s /path/to/vim_key_map ~/.config/nvim/pack/local/start/vim_key_map
 
 Output opens in a read-only scratch split. Press `q` to close.
 
-### Example
-
-```
-Active key bindings for mode "n" (user mappings override defaults; empty slots are free):
-
-- a:
-    A          append text after the end of the line N times     vim-builtin
-    a          append-forward                                    init.lua
-    <C-A>      add N to number at/after cursor                   vim-builtin
-
-- b:
-    B          cursor N WORDS backward                           vim-builtin
-    b          cursor N words backward                           vim-builtin
-    <C-B>      scroll N screens Backwards                        vim-builtin
-
-- c:
-    <C-C>      interrupt current (search) command                vim-builtin
-
-...
-
-- g:
-    G          cursor to line N, default last line               vim-builtin
-    g%         → <Plug>(MatchitNormalBackward)                   plugin/matchit.vim
-    gT         go to the previous tab page                       vim-builtin
-    gf         → tih0<Esc>                                       init.lua
-    gg         cursor to line N, default first line              vim-builtin
-    gt         go to the next tab page                           vim-builtin
-```
 
 ## How source resolution works
 
@@ -144,7 +137,3 @@ then by length, then lexicographically.
 Defaults are loaded for `n`, `i`, `x`, `o`, `c`. The `v`/`s` modes inherit
 visible mappings from `x` indirectly via user mappings (the `v` mode flag in
 Vim covers both visual and select).
-
-## License
-
-Do whatever you want.
